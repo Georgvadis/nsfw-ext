@@ -41,7 +41,7 @@ import kotlin.time.Duration.Companion.seconds
 @OptIn(ExperimentalUnsignedTypes::class)
 class Hitomi(
     override val lang: String,
-    private val nozomiLang: String,
+    private val nozomiLang: String
 ) : HttpSource() {
 
     override val name = "Hitomi"
@@ -88,7 +88,7 @@ class Hitomi(
                 searchResponse = hitomiSearch(
                     query.trim(),
                     filters,
-                    nozomiLang,
+                    nozomiLang
                 )
             }
 
@@ -139,7 +139,7 @@ class Hitomi(
     private suspend fun hitomiSearch(
         query: String,
         filters: FilterList,
-        language: String = "all",
+        language: String = "all"
     ): List<Int> =
         coroutineScope {
             var sortBy: Pair<String?, String> = Pair(null, "index")
@@ -266,7 +266,7 @@ class Hitomi(
     // search.js
     private suspend fun getGalleryIDsForQuery(
         query: String,
-        language: String = "all",
+        language: String = "all"
     ): Set<Int> {
         query.replace("_", " ").let {
             if (it.indexOf(':') > -1) {
@@ -336,11 +336,11 @@ class Hitomi(
 
     private tailrec suspend fun bSearch(
         key: UByteArray,
-        node: Node,
+        node: Node
     ): Pair<Long, Int>? {
         fun compareArrayBuffers(
             dv1: UByteArray,
-            dv2: UByteArray,
+            dv2: UByteArray
         ): Int {
             val top = min(dv1.size, dv2.size)
 
@@ -357,7 +357,7 @@ class Hitomi(
 
         fun locateKey(
             key: UByteArray,
-            node: Node,
+            node: Node
         ): Pair<Boolean, Int> {
             for (i in node.keys.indices) {
                 val cmpResult = compareArrayBuffers(key, node.keys[i])
@@ -398,7 +398,7 @@ class Hitomi(
         area: String?,
         tag: String,
         language: String,
-        range: LongRange? = null,
+        range: LongRange? = null
     ): Set<Int> {
         val nozomiAddress = when (area) {
             null -> "$ltnUrl/$tag-$language.nozomi"
@@ -424,14 +424,14 @@ class Hitomi(
 
     private val galleriesIndexVersion by lazy {
         client.newCall(
-            GET("$ltnUrl/galleriesindex/version?_=${System.currentTimeMillis()}", headers),
+            GET("$ltnUrl/galleriesindex/version?_=${System.currentTimeMillis()}", headers)
         ).execute().use { it.body.string() }
     }
 
     private data class Node(
         val keys: List<UByteArray>,
         val datas: List<Pair<Long, Int>>,
-        val subNodeAddresses: List<Long>,
+        val subNodeAddresses: List<Long>
     )
 
     private fun decodeNode(data: ByteArray): Node {
@@ -570,7 +570,7 @@ class Hitomi(
                 url = gallery.galleryurl
                 scanlator = gallery.type
                 date_upload = dateFormat.tryParse(gallery.date.substringBeforeLast("-"))
-            },
+            }
         )
     }
 
@@ -604,7 +604,7 @@ class Hitomi(
             Page(
                 idx,
                 "$baseUrl/reader/$id.html",
-                imageUrl,
+                imageUrl
             )
         }
     }
@@ -646,7 +646,7 @@ class Hitomi(
     private suspend fun refreshScript() = mutex.withLock {
         if (scriptLastRetrieval == null || (scriptLastRetrieval!! + 60000) < System.currentTimeMillis()) {
             val ggScript = client.newCall(
-                GET("$ltnUrl/gg.js?_=${System.currentTimeMillis()}", headers),
+                GET("$ltnUrl/gg.js?_=${System.currentTimeMillis()}", headers)
             ).awaitSuccess().use { it.body.string() }
 
             subdomainOffsetDefault = Regex("var o = (\\d)").find(ggScript)!!.groupValues[1].toInt()

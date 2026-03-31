@@ -17,7 +17,7 @@ fun getFilters(): FilterList {
         TextFilter("Male Tags", "male"),
         TextFilter("Female Tags", "female"),
         Filter.Header("Please don't put Female/Male tags here, they won't work!"),
-        TextFilter("Tags", "tag"),
+        TextFilter("Tags", "tag")
     )
 }
 
@@ -36,8 +36,8 @@ internal class TypeFilter(name: String) :
             Pair("Doujinshi", "doujinshi"),
             Pair("Game CG", "gamecg"),
             Pair("Image Set", "imageset"),
-            Pair("Manga", "manga"),
-        ).map { CheckBoxFilter(it.first, it.second, true) },
+            Pair("Manga", "manga")
+        ).map { CheckBoxFilter(it.first, it.second, true) }
     )
 internal open class CheckBoxFilter(name: String, val value: String, state: Boolean) : Filter.CheckBox(name, state)
 
@@ -48,5 +48,5 @@ private val getSortsList: List<Triple<String, String?, String>> = listOf(
     Triple("Popular: Week", "popular", "week"),
     Triple("Popular: Month", "popular", "month"),
     Triple("Popular: Year", "popular", "year"),
-    Triple("Random", "popular", "year"),
+    Triple("Random", "popular", "year")
 )

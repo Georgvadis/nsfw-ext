@@ -11,7 +11,7 @@ private const val EH_AUTHOR_NAMESPACE = "author"
 private val ONGOING_SUFFIX = arrayOf(
     "[ongoing]",
     "(ongoing)",
-    "{ongoing}",
+    "{ongoing}"
 )
 
 val EX_DATE_FORMAT = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)

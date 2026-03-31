@@ -16,13 +16,13 @@ class Gallery(
     val groups: List<Group>?,
     val characters: List<Character>?,
     val parodys: List<Parody>?,
-    val files: List<ImageFile>,
+    val files: List<ImageFile>
 )
 
 @Serializable
 class ImageFile(
     val hash: String,
-    private val name: String,
+    private val name: String
 ) {
     val isGif get() = name.endsWith(".gif") || name.endsWith(".webp")
 }
@@ -31,7 +31,7 @@ class ImageFile(
 class Tag(
     private val female: JsonPrimitive?,
     private val male: JsonPrimitive?,
-    private val tag: String,
+    private val tag: String
 ) {
     val formatted get() = if (female?.content == "1") {
         tag.toCamelCase() + " ♀"
@@ -44,28 +44,28 @@ class Tag(
 
 @Serializable
 class Artist(
-    private val artist: String,
+    private val artist: String
 ) {
     val formatted get() = artist.toCamelCase()
 }
 
 @Serializable
 class Group(
-    private val group: String,
+    private val group: String
 ) {
     val formatted get() = group.toCamelCase()
 }
 
 @Serializable
 class Character(
-    private val character: String,
+    private val character: String
 ) {
     val formatted get() = character.toCamelCase()
 }
 
 @Serializable
 class Parody(
-    private val parody: String,
+    private val parody: String
 ) {
     val formatted get() = parody.toCamelCase()
 }
@@ -79,7 +79,7 @@ private fun String.toCamelCase(): String {
                 char.uppercase()
             } else {
                 char.lowercase()
-            },
+            }
         )
         capitalize = char.isWhitespace()
     }

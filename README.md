@@ -55,6 +55,15 @@ http://127.0.0.1:8000/index.min.json
 
 ## Публикация на GitHub
 
+Для публикации в `gh-pages` после локальной сборки:
+
+```bash
+./scripts/build_repo.sh
+./scripts/publish_pages.sh
+```
+
+Скрипт `publish_pages.sh` публикует содержимое `repo/` в отдельный worktree на ветку `gh-pages`.
+
 Самый простой вариант без GitHub Pages:
 
 1. закоммитить содержимое `repo/`
@@ -65,3 +74,8 @@ https://raw.githubusercontent.com/<user>/<repo>/<branch>/repo/index.min.json
 ```
 
 Если захотите именно публикацию через GitHub Pages, можно следующим шагом добавить workflow, который будет выкладывать содержимое `repo/` как статический сайт.
+
+## Важно
+
+- не коммитьте `signingkey.jks`
+- храните один и тот же ключ подписи, иначе обновления перестанут распознаваться как обновления

@@ -29,6 +29,6 @@ class HitomiFactory : SourceFactory {
         Hitomi("ar", "arabic"),
         Hitomi("ko", "korean"),
         Hitomi("zh", "chinese"),
-        Hitomi("ja", "japanese"),
+        Hitomi("ja", "japanese")
     )
 }
