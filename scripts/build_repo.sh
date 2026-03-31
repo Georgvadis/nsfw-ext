@@ -25,6 +25,32 @@ require_env() {
     fi
 }
 
+detect_github_pages_url() {
+    local remote_url owner repo
+
+    if ! command -v git >/dev/null 2>&1; then
+        return
+    fi
+
+    remote_url="$(git -C "$ROOT_DIR" remote get-url origin 2>/dev/null || true)"
+    if [[ -z "$remote_url" ]]; then
+        return
+    fi
+
+    if [[ "$remote_url" =~ ^https://github\.com/([^/]+)/([^/.]+)(\.git)?$ ]]; then
+        owner="${BASH_REMATCH[1]}"
+        repo="${BASH_REMATCH[2]}"
+        printf 'https://%s.github.io/%s\n' "$owner" "$repo"
+        return
+    fi
+
+    if [[ "$remote_url" =~ ^git@github\.com:([^/]+)/([^/.]+)(\.git)?$ ]]; then
+        owner="${BASH_REMATCH[1]}"
+        repo="${BASH_REMATCH[2]}"
+        printf 'https://%s.github.io/%s\n' "$owner" "$repo"
+    fi
+}
+
 discover_modules() {
     local module_dir
     while IFS= read -r module_dir; do
@@ -108,6 +134,10 @@ main() {
         exit 1
     fi
 
+    local repo_website
+    repo_website="${REPO_WEBSITE:-$(detect_github_pages_url)}"
+    repo_website="${repo_website:-http://127.0.0.1:8000}"
+
     download_inspector
 
     echo "Inspecting APKs"
@@ -118,11 +148,13 @@ main() {
         cd "$ROOT_DIR"
         python3 scripts/generate_repo.py \
             --name "${REPO_NAME:-NSFW Extensions}" \
-            --website "${REPO_WEBSITE:-http://127.0.0.1:8000}"
+            --website "$repo_website"
     )
 
     echo "Repository ready:"
     echo "  $REPO_DIR/index.min.json"
+    echo "Website URL:"
+    echo "  $repo_website"
 }
 
 main "$@"

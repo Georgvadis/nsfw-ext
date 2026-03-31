@@ -55,6 +55,12 @@ http://127.0.0.1:8000/index.min.json
 
 ## Публикация на GitHub
 
+Если у `origin` стоит GitHub-репозиторий, `build_repo.sh` сам подставит `website` в `repo.json` как:
+
+```text
+https://<user>.github.io/<repo>
+```
+
 Для публикации в `gh-pages` после локальной сборки:
 
 ```bash
@@ -63,6 +69,12 @@ http://127.0.0.1:8000/index.min.json
 ```
 
 Скрипт `publish_pages.sh` публикует содержимое `repo/` в отдельный worktree на ветку `gh-pages`.
+
+Для обычного релиза одной командой:
+
+```bash
+./scripts/release_repo.sh
+```
 
 Самый простой вариант без GitHub Pages:
 
