@@ -1,0 +1,5 @@
+.cache/
+.gradle/
+output.json
+tmp/
+**/build/
