@@ -1,9 +1,0 @@
-.cache/
-.gradle/
-__pycache__/
-*.pyc
-output.json
-repo/
-signingkey.jks
-tmp/
-**/build/
